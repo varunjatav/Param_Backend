@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import studentRouter from "./routes/registration.js";
+import studentRouter from "./routes/student.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
