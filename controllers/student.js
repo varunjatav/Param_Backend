@@ -6,7 +6,7 @@ const studentController = async (req,res) => {
         const student = new Student(req.body);
         const doc = await student.save();
         res.status(201).json(doc);
-        await sendMail(req.body, "Mail Regards Contact of Students", `${req.body}\nFrom: ${req.body.name}`);
+        await sendMail(req.body, "Mail Regards Contact of Students");
         await sendMailUser(req.body, "Mail Regards Contact", "Thank you for contacting us!");
       console.log(req.body);
     }

@@ -1,21 +1,23 @@
 import nodemailer from "nodemailer";
+
+
 // Mail sending functions
 export const sendMail = async (data, subject, text) => {
-  console.log(subject);
+ 
     try {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "mohit.mohit979@gmail.com",
-          pass: "qxkt ovze ootk pysd",
+          user: process.env.AUTH_USER,
+          pass: process.env.AUTH_PASS,
         },
       });
-    
+   
       const mailOptions = {
         from: data.email,
         to: "mohit.mohit979@gmail.com , paramcomputers.jhs@gmail.com",
         subject,
-        text,
+        text: `Student name is ${data.name}\nhis/her email is ${data.email}\nhis/her contact number is ${data.phoneNo}.\nThe course he/she selected is ${data.course} from ${data.section} \nFrom: ${data.name}`,
       };
     
       const info = await transporter.sendMail(mailOptions);
@@ -30,8 +32,8 @@ export const sendMail = async (data, subject, text) => {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "mohit.mohit979@gmail.com",
-          pass: "qxkt ovze ootk pysd",
+          user: process.env.AUTH_USER,
+          pass: process.env.AUTH_PASS,
         },
       });
     
@@ -48,8 +50,3 @@ export const sendMail = async (data, subject, text) => {
       console.error(error);
     }
   };
-
-//   export default {
-//     sendMail,
-//     sendMailUser
-//   }

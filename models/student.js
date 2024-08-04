@@ -5,6 +5,7 @@ const studentSchema = new mongoose.Schema({
     email: String,
     phoneNo: String,
     course: String,
+    section:String,
 });
 
 export default mongoose.model("Student", studentSchema);  
