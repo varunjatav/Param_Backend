@@ -21,7 +21,7 @@ export const sendMail = async (data, subject, text) => {
       };
     
       const info = await transporter.sendMail(mailOptions);
-      console.log("Email sent: " + info.response);
+      // console.log("Email sent: " + info.response);
     } catch (error) {
       console.error(error);
     }
@@ -45,7 +45,7 @@ export const sendMail = async (data, subject, text) => {
       };
     
       const info = await transporter.sendMail(mailOptions);
-      console.log("Email sent: " + info.response);
+      // console.log("Email sent: " + info.response);
     } catch (error) {
       console.error(error);
     }
