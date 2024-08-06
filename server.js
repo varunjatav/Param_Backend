@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGODB)
 
 app.use("/registration",studentRouter);
 app.get("/", (req, res) => {
-    res.sendFile("Welcome to server!!")
+    res.send("Welcome to server!!")
 })
 app.get("/registration", (req,res)=>{
   res.send("Welcome tp registration");
