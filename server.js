@@ -6,12 +6,16 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = 3001;
 dotenv.config();
 
 app.use(cors());
 app.use(bodyParser.json());
-mongoose.connect(process.env.MONGODB)
+mongoose.connect(process.env.MONGO_URL).then(() => {
+  console.log('Connected to MongoDB');
+}).catch((error) => {
+  console.error('Connection error', error);
+});
 
 app.use("/registration",studentRouter);
 app.get("/", (req, res) => {
