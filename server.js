@@ -13,7 +13,10 @@ app.use(cors());
 app.use(bodyParser.json());
 mongoose.connect(process.env.MONGODB)
 
-app.use("/registration",studentRouter)
+app.use("/registration",studentRouter);
+app.get("/registration", (req,res)=>{
+  res.send("Welcome");
+})
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
