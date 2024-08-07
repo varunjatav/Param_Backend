@@ -2,30 +2,44 @@ import Student from "../models/student.js";
 import { sendMail, sendMailUser } from "../mail.js";
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
+import dotenv from "dotenv";
 
 
+
+dotenv.config();
+console.log("APPID: ",process.env.APP_ID);
+console.log("SECRET KEY: ",process.env.SECRET_KEY);
 const studentController = async (req,res) => {
 
   try {
     const order_id = `order_${uuidv4()}`;
     if (req.body) {
-      const response = await axios.post('https://test.cashfree.com/api/v1/order/create', {
-        // Replace with actual request payload
-        order_id: order_id,
-        order_amount: 100, // Example amount
-        customer_email: req.body.email,
-        customer_phone: req.body.phoneNO,
-        return_url: `https://test.cashfree.com/pgappsdemos/return.php?order_id=${order_id}`,
+      const { email, phoneNo } = req.body;
+     
+      // Validate request body
+      if (!email || !phoneNo) {
+        return res.status(400).json({ message: "Email and phone number are required" });
+      }
+      const response = await axios.post('https://sandbox.cashfree.com/pg/orders', {
+        customer_details: {
+          customer_id: "7112AAA812234",
+          customer_phone: "9898989898"
+        },
+        order_currency: "INR",
+        order_amount: 10.34
       }, {
         headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': process.env.APP_ID,
-          'x-api-secret': process.env.SECRET_KEY
+          'accept': 'application/json',
+          'content-type': 'application/json',
+          'x-api-version': '2023-08-01',
+          'x-client-id': process.env.APP_ID,
+          'x-client-secret': process.env.SECRET_KEY
         }
       });
-      console.log("response data: ",response.data);
+      
   
-      const paymentSessionId = response.data.paymentSessionId;
+      const paymentSessionId = response.data.payment_session_id;
+   
         const student = new Student(req.body);
         const doc = await student.save();
         res.status(201).json({ ...doc.toObject(), paymentSessionId });
@@ -55,3 +69,32 @@ const studentController = async (req,res) => {
 
 
 export default studentController;
+
+
+/*
+curl --request POST \
+     --url https://sandbox.cashfree.com/pg/orders \
+     --header 'accept: application/json' \
+     --header 'content-type: application/json' \
+     --header 'x-api-version: 2023-08-01' \
+     --header 'x-client-id: TEST102460268052e16f5bad020b244d62064201' \
+     --header 'x-client-secret: cfsk_ma_test_7ba52560b6c5b34eab7f4edfbb08b2c0_537a25de' \
+     --data '
+{
+  "customer_details": {
+    "customer_id": "12589",
+    "customer_email": "test@gmail.com",
+    "customer_phone": "9874561238",
+    "customer_name": "Code Sense"
+  },
+  "order_meta": {
+    "payment_methods": "cc,dc,upi",
+    "notify_url": "https://webhook.site/1b87125d-ff6e-453a-8e09-b317b73758ff"
+  },
+  "order_id": "452323",
+  "order_amount": 2000,
+  "order_currency": "INR",
+  "order_note": "First Test Order"
+}
+'
+*/ 
