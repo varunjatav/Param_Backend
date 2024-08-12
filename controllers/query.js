@@ -1,3 +1,4 @@
+import { sendQueryMail, sendQueryMailUs } from "../mail.js";
 import  Query  from "../models/query.js";
 
 const queryController = async (req,res) => {
@@ -6,6 +7,8 @@ const queryController = async (req,res) => {
             console.log(req.body);
             const query = new Query(req.body);
              await query.save();
+             await sendQueryMail(req.body);
+             await sendQueryMailUs(req.body);
             res.status(201).json(req.body);
         }
      } catch (error) {
