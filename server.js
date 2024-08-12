@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import studentRouter from "./routes/student.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import QueryRouter from "./routes/query.js";
 
 
 dotenv.config();
@@ -21,12 +22,13 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
   console.error('Connection error', error);
 });
 
-app.use("/registration",studentRouter);
+app.use("/api",studentRouter);
+app.use("/api",QueryRouter)
 app.get("/", (req, res) => {
     res.send("Welcome to server!!")
 })
-app.get("/registration", (req,res)=>{
-  res.send("Welcome to registration");
+app.get("/api", (req,res)=>{
+  res.send("Welcome to API");
 })
 
 app.listen(port, () => {

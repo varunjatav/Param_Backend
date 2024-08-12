@@ -15,7 +15,6 @@ const studentController = async (req,res) => {
     const order_id = `order_${uuidv4()}`;
     if (req.body) {
       const { email, phoneNo ,payment } = req.body;
-     console.log(email, phoneNo ,payment);
       // Validate request body
       if (!email || !phoneNo) {
         return res.status(400).json({ message: "Email and phone number are required" });
@@ -71,30 +70,3 @@ const studentController = async (req,res) => {
 export default studentController;
 
 
-/*
-curl --request POST \
-     --url https://sandbox.cashfree.com/pg/orders \
-     --header 'accept: application/json' \
-     --header 'content-type: application/json' \
-     --header 'x-api-version: 2023-08-01' \
-     --header 'x-client-id: TEST102460268052e16f5bad020b244d62064201' \
-     --header 'x-client-secret: cfsk_ma_test_7ba52560b6c5b34eab7f4edfbb08b2c0_537a25de' \
-     --data '
-{
-  "customer_details": {
-    "customer_id": "12589",
-    "customer_email": "test@gmail.com",
-    "customer_phone": "9874561238",
-    "customer_name": "Code Sense"
-  },
-  "order_meta": {
-    "payment_methods": "cc,dc,upi",
-    "notify_url": "https://webhook.site/1b87125d-ff6e-453a-8e09-b317b73758ff"
-  },
-  "order_id": "452323",
-  "order_amount": 2000,
-  "order_currency": "INR",
-  "order_note": "First Test Order"
-}
-'
-*/ 
