@@ -14,8 +14,8 @@ const studentController = async (req,res) => {
   try {
     const order_id = `order_${uuidv4()}`;
     if (req.body) {
-      const { email, phoneNo } = req.body;
-     
+      const { email, phoneNo ,payment } = req.body;
+     console.log(email, phoneNo ,payment);
       // Validate request body
       if (!email || !phoneNo) {
         return res.status(400).json({ message: "Email and phone number are required" });
@@ -23,10 +23,10 @@ const studentController = async (req,res) => {
       const response = await axios.post('https://sandbox.cashfree.com/pg/orders', {
         customer_details: {
           customer_id: "7112AAA812234",
-          customer_phone: "9898989898"
+          customer_phone: phoneNo
         },
         order_currency: "INR",
-        order_amount: 10.34
+        order_amount: payment
       }, {
         headers: {
           'accept': 'application/json',
