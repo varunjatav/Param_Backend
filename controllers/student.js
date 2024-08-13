@@ -14,10 +14,10 @@ const studentController = async (req,res) => {
   try {
     const order_id = `order_${uuidv4()}`;
     if (req.body) {
-      const { email, phoneNo ,payment } = req.body;
+      const { name, email, phoneNo , mode, course, section, payment  } = req.body;
       // Validate request body
-      if (!email || !phoneNo) {
-        return res.status(400).json({ message: "Email and phone number are required" });
+      if (!name ||!email || !phoneNo ||!mode || !course || !section || !payment) {
+        return res.status(400).json({ message: "Some Fields are Empty!!" });
       }
       const response = await axios.post('https://sandbox.cashfree.com/pg/orders', {
         customer_details: {

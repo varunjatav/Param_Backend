@@ -4,6 +4,10 @@ import  Query  from "../models/query.js";
 const queryController = async (req,res) => {
     try {
         if(req.body){
+            const { name, email, phoneNo, message } = req.body;
+            if (!name ||!email || !phoneNo || !message) {
+                return res.status(400).json({ message: "Some Fields are Empty!!" });
+              }
             console.log(req.body);
             const query = new Query(req.body);
              await query.save();
