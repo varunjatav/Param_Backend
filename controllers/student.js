@@ -42,8 +42,8 @@ const studentController = async (req,res) => {
         const student = new Student(req.body);
         const doc = await student.save();
         res.status(201).json({ ...doc.toObject(), paymentSessionId });
-        await sendMail(req.body, "Mail Regards Contact of Students");
-        await sendMailUser(req.body, "Mail Regards Contact", "Thank you for contacting us!");
+        await sendMail(req.body, "Mail Regards Registration of Students");
+        await sendMailUser(req.body, "Mail Regards Registration to Param Computers", "Thank you for contacting us!");
       //  console.log(req.body);
     }
   } catch (error) {
